@@ -1,0 +1,15 @@
+# Func
+- Client / Server for video game (enet)
+- Client gui (raylib)
+- Master server :
+	- Game servers send their ip
+	- Game clients can see all the available servers
+- Webpage to download client / server with a specified version and marchine target
+
+# Tech
+- Cross compilation
+- Protobuf messages through enet
+- Precommit
+	- Code linter
+	- Code static analysis
+	- Commit linter
