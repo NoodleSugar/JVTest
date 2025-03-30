@@ -1,0 +1,34 @@
+{
+	"version": 10,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 31,
+		"patch": 0
+	},
+	"include": [
+		"cmake/presets/ConfigurePresets.json"
+	],
+	"configurePresets": [
+		{
+			"name": "debug",
+			"displayName": "Debug Config",
+			"description": "",
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/build",
+			"installDir": "${sourceDir}/install",
+			"cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "debug",
+			"displayName": "Debug Build",
+			"configurePreset": "debug",
+			"targets": [
+				"client", "server"
+			]
+		}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"name": "Ubuntu JV Dev",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools-extension-pack",
+				"eamodio.gitlens",
+				"Something-Software.clang-format-2",
+				"EditorConfig.EditorConfig"
+			]
+		}
+	},
+	"containerUser": "ubuntu",
+	"mounts": [
+		"type=bind,readonly,src=${localEnv:HOME}/.ssh,dst=/home/ubuntu/.ssh",
+		"type=bind,readonly,src=${localEnv:HOME}/.config/git/allowed_signers,dst=/home/ubuntu/.config/git/allowed_signers"
+	],
+	"onCreateCommand": {
+		"gitconfig": ".devcontainer/scripts/gitconfig.sh"
+	}
+}

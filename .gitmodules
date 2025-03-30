@@ -1,0 +1,35 @@
+[submodule "thirdparty/enet"]
+	path    = thirdparty/enet
+	url     = git@github.com:zpl-c/enet.git
+	branch  = v2.6.2
+
+	shallow = true
+	ignore = all
+	fetchRecurseSubmodules = true
+
+[submodule "thirdparty/protobuf"]
+	path    = thirdparty/protobuf
+	url     = git@github.com:protocolbuffers/protobuf.git
+	branch  = v30.2
+
+	shallow = true
+	ignore = all
+	fetchRecurseSubmodules = true
+
+[submodule "thirdparty/raylib"]
+	path    = thirdparty/raylib
+	url     = git@github.com:raysan5/raylib.git
+	branch  = 5.5
+
+	shallow = true
+	ignore = all
+	fetchRecurseSubmodules = true
+
+[submodule "thirdparty/windows-msvc-sysroot"]
+	path    = thirdparty/windows-msvc-sysroot
+	url     = git@github.com:trcrsired/windows-msvc-sysroot.git
+	branch  = 2025-01-22
+
+	shallow = true
+	ignore = all
+	fetchRecurseSubmodules = true
