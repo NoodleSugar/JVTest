@@ -1,0 +1,10 @@
+.vscode
+
+**/.config
+**/.env
+**/tmp
+
+assets
+
+target
+Cargo.lock

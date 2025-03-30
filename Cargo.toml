@@ -1,0 +1,33 @@
+[package]
+name = "Test"
+authors = ["Sugar Noodle"]
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { version = "0.19", default-features = false, features = ["3d"] }
+avian3d = { version = "0.7" }
+bevy-tnua = { version = "0.32" }
+bevy-tnua-avian3d = { version = "0.12" }
+bevy_enhanced_input = { version = "0.26" }
+
+tracing = { version = "0.1" }
+
+# Optimize logs for bevy
+log = { version = "*", features = [
+	"max_level_debug",
+	"release_max_level_warn",
+] }
+
+[features]
+default = ["dev"]
+dev = ["bevy/dynamic_linking", "bevy/debug"]
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+strip = "debuginfo"
