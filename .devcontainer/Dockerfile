@@ -20,6 +20,6 @@ RUN	apt update -y \
 &&	echo $TZ > /etc/timezone
 
 USER devuser
-RUN	rustup default stable \
-&&	rustup toolchain add nightly-x86_64-unknown-linux-gnu \
-&&	rustup target add x86_64-pc-windows-gnu
+RUN	rustup default nightly \
+&&	rustup target add x86_64-pc-windows-gnu \
+&&	cargo install cargo-audit
