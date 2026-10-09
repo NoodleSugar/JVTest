@@ -21,8 +21,8 @@
 	"runArgs": [],
 	"mounts": [
 		{
-			"source": "${localEnv:HOME}/.cargo",
-			"target": "/home/devuser/.cargo",
+			"source": "${localEnv:HOME}/.cargo/registry",
+			"target": "/home/devuser/.cargo/registry",
 			"type": "bind"
 		},
 		{
