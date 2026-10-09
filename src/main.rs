@@ -9,22 +9,44 @@ mod input;
 mod player;
 
 fn main() {
-	App::new()
-		.add_plugins((
-			DefaultPlugins.set(WindowPlugin {
-				primary_cursor_options: Some(CursorOptions {
-					grab_mode: CursorGrabMode::Locked,
-					visible: false,
-					..default()
-				}),
+	let mut app = App::new();
+	app.add_plugins((
+		DefaultPlugins.set(WindowPlugin {
+			primary_cursor_options: Some(CursorOptions {
+				grab_mode: CursorGrabMode::Locked,
+				visible: false,
 				..default()
 			}),
-			PhysicsPlugins::default(),
-			crate::player::PlayerPlugin,
-		))
-		.add_systems(Startup, setup)
-		.insert_resource(ClearColor(WHITE.into()))
-		.run();
+			..default()
+		}),
+		PhysicsPlugins::default(),
+		crate::player::PlayerPlugin,
+	))
+	.add_systems(Startup, setup)
+	.insert_resource(ClearColor(WHITE.into()));
+
+	#[cfg(feature = "dev")]
+	app.add_plugins((
+		bevy::dev_tools::fps_overlay::FpsOverlayPlugin {
+			config: bevy::dev_tools::fps_overlay::FpsOverlayConfig {
+				text_config: TextFont {
+					font_size: FontSize::Px(42.0),
+					..default()
+				},
+				text_color: GREEN.into(),
+				refresh_interval: core::time::Duration::from_millis(100),
+				enabled: true,
+				frame_time_graph_config:
+					bevy::dev_tools::fps_overlay::FrameTimeGraphConfig {
+						enabled: true,
+						min_fps: 30.0,
+						target_fps: 60.0,
+					},
+			},
+		},
+	));
+
+	app.run();
 }
 
 fn setup(mut commands: Commands) {
