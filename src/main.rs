@@ -28,7 +28,7 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-	commands.spawn_scene(bsn!(
+	commands.spawn_scene(bsn! {
 		Transform::from_translation(Vec3::NEG_Z * 1.5 + Vec3::Y * 0.5)
 
 		RigidBody::from(RigidBody::Static)
@@ -40,8 +40,8 @@ fn setup(mut commands: Commands) {
 		MeshMaterial3d<StandardMaterial>(
 			asset_value(StandardMaterial::from_color(BLUE))
 		)
-	));
-	commands.spawn_scene(bsn!(
+	});
+	commands.spawn_scene(bsn! {
 		RigidBody::from(RigidBody::Static)
 		Collider::cuboid(10.0, 0.0, 10.0)
 
@@ -51,7 +51,7 @@ fn setup(mut commands: Commands) {
 		MeshMaterial3d<StandardMaterial>(
 			asset_value(StandardMaterial::from_color(GREEN))
 		)
-	));
+	});
 	commands
 		.spawn((PointLight::default(), Transform::from_xyz(3.0, -3.0, 5.0)));
 }

@@ -87,14 +87,14 @@ impl Player {
 	);
 
 	pub fn scene() -> impl Scene {
-		bsn!(
+		bsn! {
 			Mesh3d(
 				asset_value(Capsule3d::new(Player::RADIUS, Self::HEIGHT * 0.80))
 			)
 			MeshMaterial3d<StandardMaterial>(
 				asset_value(StandardMaterial::from_color(RED))
 			)
-		)
+		}
 	}
 }
 
