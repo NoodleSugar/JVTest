@@ -1,9 +1,9 @@
-use avian3d::{math::Scalar, prelude::*};
+use avian3d::{math::Real, prelude::*};
 use bevy::{color::palettes::css::RED, prelude::*};
 use bevy_tnua::{builtins::*, prelude::*};
 use bevy_tnua_avian3d::prelude::*;
 
-use crate::input::{CharacterAccumulatedInput, character_input_bundle};
+use crate::input::{CharacterAccumulatedInput, character_input_scene};
 
 pub struct PlayerPlugin;
 
@@ -34,23 +34,35 @@ fn setup_player(
 	mut commands: Commands,
 	mut control_scheme_configs: ResMut<Assets<PlayerControlSchemeConfig>>,
 ) {
-	const COLLIDER_RADIUS: Scalar = Player::RADIUS + 0.05;
+	const COLLIDER_RADIUS: Real = Player::RADIUS + 0.05;
 
 	commands
 		.spawn_scene(bsn! {
 			@Player
+			Transform::from_translation(Vec3::Y * 30.0)
+
+			// Input
+			@character_input_scene()
+
+			// Physic
+			RigidBody::Dynamic
+			LockedAxes::ROTATION_LOCKED
+			Collider::capsule(COLLIDER_RADIUS, Player::HEIGHT)
+			Children[
+				Visibility::default()
+				Player::RELATIVE_HEAD_POSITION
+				Camera3d::default()
+			]
 		})
 		.insert((
-			Transform::from_translation(Vec3::Y * 30.0),
-			// Input
-			character_input_bundle(),
 			// Controller
 			TnuaController::<PlayerControlScheme>::default(),
 			TnuaConfig::<PlayerControlScheme>(control_scheme_configs.add(
 				PlayerControlSchemeConfig {
 					basis: TnuaBuiltinWalkConfig {
 						float_height: (Player::HEIGHT) / 2.0
-							+ COLLIDER_RADIUS + 0.001,
+							+ COLLIDER_RADIUS
+							+ 0.001,
 						speed: 2.0,
 						..default()
 					},
@@ -62,25 +74,16 @@ fn setup_player(
 					},
 				},
 			)),
-			// Physic
-			RigidBody::Dynamic,
-			LockedAxes::ROTATION_LOCKED,
-			Collider::capsule(COLLIDER_RADIUS, Player::HEIGHT),
 			TnuaAvian3dSensorShape(Collider::cylinder(
 				COLLIDER_RADIUS - 0.02,
 				0.0,
 			)),
-			children![(
-				Visibility::default(),
-				Player::RELATIVE_HEAD_POSITION,
-				Camera3d::default(),
-			)],
 		));
 }
 
 impl Player {
-	pub const HEIGHT: Scalar = 1.80;
-	pub const RADIUS: Scalar = 0.20;
+	pub const HEIGHT: Real = 1.80;
+	pub const RADIUS: Real = 0.20;
 
 	pub const RELATIVE_HEAD_POSITION: Transform = Transform::from_translation(
 		Vec3::new(0.0, Player::HEIGHT / 2.0 * 0.8, 0.0),

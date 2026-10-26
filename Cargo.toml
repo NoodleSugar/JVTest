@@ -5,11 +5,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bevy = { version = "0.19", default-features = false, features = ["3d", "ui"] }
-avian3d = { version = "0.7" }
-bevy-tnua = { version = "0.32" }
-bevy-tnua-avian3d = { version = "0.12" }
-bevy_enhanced_input = { version = "0.26" }
+bevy = { version = "0.20", default-features = false, features = ["3d", "ui"] }
+avian3d = { version = "0.8" }
+bevy-tnua = { version = "0.33" }
+bevy-tnua-avian3d = { version = "0.13" }
+bevy_enhanced_input = { version = "0.27" }
 
 tracing = { version = "0.1" }
 
@@ -25,6 +25,7 @@ dev = [
 	"bevy/dynamic_linking",
 	"bevy/debug",
 	"bevy/bevy_dev_tools",
+	"bevy/render_dev_tools",
 ]
 
 [profile.dev]

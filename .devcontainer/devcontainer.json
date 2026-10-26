@@ -18,7 +18,6 @@
 		"WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
 		"PULSE_SERVER": "/tmp/pulse.socket"
 	},
-	"runArgs": [],
 	"mounts": [
 		{
 			"source": "${localEnv:HOME}/.cargo/registry",

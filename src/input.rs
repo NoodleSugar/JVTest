@@ -35,30 +35,33 @@ pub struct Look;
 #[action_output(bool)]
 pub struct Jump;
 
-pub fn character_input_bundle() -> impl Bundle {
-	(
-		CharacterAccumulatedInput::default(),
-		actions!(Player[
-			(
-				Action::<Movement>::new(),
-				Bindings::spawn((
-					Cardinal::wasd_keys(),
-					Axial::left_stick(),
-				)),
-			),
-			(
-				Action::<Look>::new(),
-				Bindings::spawn((
-					Spawn((Binding::mouse_motion(), Negate::all())),
-					Axial::right_stick(),
-				)),
-			),
-			(
-				Action::<Jump>::new(),
-				bindings![KeyCode::Space, GamepadButton::South],
-			),
-		]),
-	)
+pub fn character_input_scene() -> impl Scene {
+	bsn! {
+		CharacterAccumulatedInput::default()
+		Actions<Player> [
+			Action::<Movement>::new()
+			Bindings [
+				{preset::cardinal::wasd_keys()}
+				--
+				{preset::axial::left_stick()}
+			]
+			--
+			Action::<Look>::new()
+			Bindings [
+				Binding::mouse_motion()
+				~Negate::all()
+				--
+				{preset::axial::right_stick()}
+			]
+			--
+			Action::<Jump>::new()
+			Bindings [
+				Binding(KeyCode::Space)
+				--
+				Binding(GamepadButton::South)
+			]
+		]
+	}
 }
 
 fn accumulate_movement(
