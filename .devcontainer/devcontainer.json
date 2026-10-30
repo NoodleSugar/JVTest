@@ -21,5 +21,6 @@
 		}
 	],
 	"remoteUser": "devuser",
-	"initializeCommand": "(cd ${localWorkspaceFolder}/dev-containers && ./build.sh debian && ./build.sh rust)"
+	"initializeCommand": "(cd ${localWorkspaceFolder}/dev-containers && ./build.sh debian && ./build.sh rust)",
+	"postCreateCommand": "git lfs install"
 }
