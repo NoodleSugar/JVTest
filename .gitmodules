@@ -1,0 +1,5 @@
+[submodule "dev-containers"]
+	path = dev-containers
+	url = git@github.com:NoodleSugar/dev-containers.git
+	branch = rust
+	shallow = true

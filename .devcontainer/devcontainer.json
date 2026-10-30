@@ -13,32 +13,13 @@
 			]
 		}
 	},
-	"remoteEnv": {
-		"XDG_RUNTIME_DIR": "/tmp",
-		"WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
-		"PULSE_SERVER": "/tmp/pulse.socket"
-	},
 	"mounts": [
 		{
-			"source": "${localEnv:HOME}/.cargo/registry",
-			"target": "/home/devuser/.cargo/registry",
-			"type": "bind"
-		},
-		{
-			"source": "${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY}",
-			"target": "/tmp/${localEnv:WAYLAND_DISPLAY}",
-			"type": "bind"
-		},
-		{
-			"source": "${localEnv:XDG_RUNTIME_DIR}/pipewire-0",
-			"target": "/tmp/pipewire-0",
-			"type": "bind"
-		},
-		{
-			"source": "${localEnv:XDG_RUNTIME_DIR}/pulse/native",
-			"target": "/tmp/pulse.socket",
-			"type": "bind"
+			"type": "volume",
+			"source": "cargo-registry",
+			"target": "/home/devuser/.cargo/registry"
 		}
 	],
-	"remoteUser": "devuser"
+	"remoteUser": "devuser",
+	"initializeCommand": "(cd ${localWorkspaceFolder}/dev-containers && ./build.sh debian && ./build.sh rust)"
 }
