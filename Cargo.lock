@@ -3,19 +3,6 @@
 version = 4
 
 [[package]]
-name = "Test"
-version = "0.1.0"
-dependencies = [
- "avian3d",
- "bevy",
- "bevy-tnua",
- "bevy-tnua-avian3d",
- "bevy_enhanced_input",
- "log",
- "tracing",
-]
-
-[[package]]
 name = "ab_glyph"
 version = "0.2.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2964,6 +2951,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e6853b52649d4ac5c0bd02320cddc5ba956bdb407c4b75a2c6b75bf51500f8c"
 dependencies = [
  "simd-adler32",
+]
+
+[[package]]
+name = "fear_itself_game"
+version = "0.1.0"
+dependencies = [
+ "avian3d",
+ "bevy",
+ "bevy-tnua",
+ "bevy-tnua-avian3d",
+ "bevy_enhanced_input",
+ "log",
+ "tracing",
 ]
 
 [[package]]
