@@ -3,15 +3,28 @@
 pub mod level;
 
 use avian3d::prelude::*;
-use bevy::{color::palettes::css::{DARK_GREY, GREY}, prelude::*};
+use bevy::{
+	color::palettes::css::{DARK_GREY, GREY},
+	prelude::*,
+};
 
-pub fn wall() -> impl Scene {
+pub fn wall(begin: Vec2, end: Vec2) -> impl Scene {
+	const HEIGHT: f32 = 3.0;
+	let diff = end - begin;
+	let middle = (begin + end) / 2.0;
+	let scale = Vec3::ONE.with_x(diff.length());
+
 	bsn! {
+		Transform {
+			translation: Vec3::new(middle.x, HEIGHT / 2.0, middle.y),
+			scale
+		}
+
 		RigidBody::Static
-		Collider::cuboid(1.0, 3.0, 0.1)
+		Collider::cuboid(1.0, HEIGHT, 0.1)
 
 		Mesh3d(
-			asset_value(Cuboid::new(1.0, 3.0, 0.1))
+			asset_value(Cuboid::new(1.0, HEIGHT, 0.1))
 		)
 		MeshMaterial3d<StandardMaterial>(
 			asset_value(StandardMaterial::from_color(GREY))
