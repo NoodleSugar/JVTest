@@ -1,4 +1,4 @@
-use avian3d::{math::Real, prelude::*};
+use avian3d::prelude::*;
 use bevy::{color::palettes::css::RED, prelude::*};
 use bevy_tnua::{builtins::*, prelude::*};
 use bevy_tnua_avian3d::prelude::*;
@@ -14,7 +14,6 @@ impl Plugin for PlayerPlugin {
 			TnuaControllerPlugin::<PlayerControlScheme>::new(FixedUpdate),
 			TnuaAvian3dPlugin::new(FixedUpdate),
 		))
-		.add_systems(Startup, setup_player)
 		.add_systems(
 			Update,
 			(
@@ -30,38 +29,45 @@ pub struct Player {
 	pub sight_orientation: Vec2,
 }
 
-fn setup_player(
-	mut commands: Commands,
-	mut control_scheme_configs: ResMut<Assets<PlayerControlSchemeConfig>>,
-) {
-	const COLLIDER_RADIUS: Real = Player::RADIUS + 0.05;
+impl Player {
+	pub const HEIGHT: f32 = 1.80;
+	pub const RADIUS: f32 = 0.20;
 
-	commands
-		.spawn_scene(bsn! {
-			@Player
-			Transform::from_translation(Vec3::Y * 30.0)
+	pub const RELATIVE_HEAD_POSITION: Transform = Transform::from_translation(
+		Vec3::new(0.0, Player::HEIGHT / 2.0 * 0.8, 0.0),
+	);
+
+	pub fn scene() -> impl Scene {
+		bsn! {
+			// Physic
+			RigidBody::Dynamic
+			LockedAxes::ROTATION_LOCKED
+			Collider::capsule(Self::RADIUS, Self::HEIGHT)
+			Children[
+				Visibility::default()
+				Self::RELATIVE_HEAD_POSITION
+				Camera3d::default()
+			]
+
+			// Model
+			Mesh3d(
+				asset_value(Capsule3d::new(Self::RADIUS, Self::HEIGHT * 0.80))
+			)
+			MeshMaterial3d<StandardMaterial>(
+				asset_value(StandardMaterial::from_color(RED))
+			)
+
 
 			// Input
 			@character_input_scene()
 
-			// Physic
-			RigidBody::Dynamic
-			LockedAxes::ROTATION_LOCKED
-			Collider::capsule(COLLIDER_RADIUS, Player::HEIGHT)
-			Children[
-				Visibility::default()
-				Player::RELATIVE_HEAD_POSITION
-				Camera3d::default()
-			]
-		})
-		.insert((
 			// Controller
-			TnuaController::<PlayerControlScheme>::default(),
-			TnuaConfig::<PlayerControlScheme>(control_scheme_configs.add(
+			TnuaController<PlayerControlScheme>
+			TnuaConfig<PlayerControlScheme>(asset_value(
 				PlayerControlSchemeConfig {
 					basis: TnuaBuiltinWalkConfig {
 						float_height: (Player::HEIGHT) / 2.0
-							+ COLLIDER_RADIUS
+							+ Self::RADIUS
 							+ 0.001,
 						speed: 2.0,
 						..default()
@@ -73,30 +79,11 @@ fn setup_player(
 						..default()
 					},
 				},
-			)),
+			))
 			TnuaAvian3dSensorShape(Collider::cylinder(
-				COLLIDER_RADIUS - 0.02,
+				Self::RADIUS - 0.02,
 				0.0,
-			)),
-		));
-}
-
-impl Player {
-	pub const HEIGHT: Real = 1.80;
-	pub const RADIUS: Real = 0.20;
-
-	pub const RELATIVE_HEAD_POSITION: Transform = Transform::from_translation(
-		Vec3::new(0.0, Player::HEIGHT / 2.0 * 0.8, 0.0),
-	);
-
-	pub fn scene() -> impl Scene {
-		bsn! {
-			Mesh3d(
-				asset_value(Capsule3d::new(Player::RADIUS, Self::HEIGHT * 0.80))
-			)
-			MeshMaterial3d<StandardMaterial>(
-				asset_value(StandardMaterial::from_color(RED))
-			)
+			))
 		}
 	}
 }
