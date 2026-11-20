@@ -9,7 +9,7 @@ bevy = { version = "0.20", default-features = false, features = ["3d", "ui"] }
 avian3d = { version = "0.8" }
 bevy-tnua = { version = "0.33" }
 bevy-tnua-avian3d = { version = "0.13" }
-bevy_enhanced_input = { version = "0.27" }
+leafwing-input-manager = { version = "0.22" }
 
 tracing = { version = "0.1" }
 

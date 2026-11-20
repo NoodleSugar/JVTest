@@ -1,5 +1,5 @@
 pub mod assets;
-pub mod input;
+pub mod control;
 pub mod player;
 
 #[cfg(feature = "dev")]
@@ -32,7 +32,8 @@ fn bevy_plugin(app: &mut App) {
 			..default()
 		}),
 		PhysicsPlugins::default(),
-		crate::player::PlayerPlugin,
+		crate::player::player_plugin,
+		crate::control::control_plugin,
 	))
 	.insert_resource(ClearColor(WHITE.into()));
 }
